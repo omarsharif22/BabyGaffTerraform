@@ -5,70 +5,70 @@ provider "aws" {
 }
 
 #Create VPC in eu-west-1
-resource "aws_vpc" "BabyVPC" {
+resource "aws_vpc" "BabyGaffVPC" {
     cidr_block           = "10.0.0.0/16"
     enable_dns_support   = true
     enable_dns_hostnames = true
     
     tags = {
-      Name = "Baby Terraform VPC"
+      Name = "BabyGaff Terraform VPC"
     }
 }
 
 #Create public subnet # 1 in eu-west-1a
-resource "aws_subnet" "BabyPublic1a" {
-    vpc_id            = "aws_vpc.BabyVPC.id"
+resource "aws_subnet" "BabyGaffPublic1a" {
+    vpc_id            = "aws_vpc.BabyGaffVPC.id"
     cidr_block        = "10.0.1.0/24"
     map_public_ip_on_launch = "true"
     availability_zone = "eu-west-1a"
 
     tags = {
-      Name = "Baby Terraform Public Subnet"
+      Name = "BabyGaff Terraform Public Subnet"
     }
 } 
 
 #Create private subnet # 2 in eu-west-1a
-resource "aws_subnet" "BabyPrivate1a" {
-    vpc_id            = "aws_vpc.BabyVPC.id"
+resource "aws_subnet" "BabyGaffPrivate1a" {
+    vpc_id            = "aws_vpc.BabyGaffVPC.id"
     cidr_block        = "10.0.2.0/24"
     availability_zone = "eu-west-1a"
     
     tags = {
-      Name = "Baby Terraform Private Subnet"
+      Name = "BabyGaff Terraform Private Subnet"
     }
 } 
 
 #Create IGW in eu-west-1
-resource "aws_internet_gateway" "BabyIGW" {
-    vpc_id = "aws_vpc.BabyVPC.id"
+resource "aws_internet_gateway" "BabyGaffIGW" {
+    vpc_id = "aws_vpc.BabyGaffVPC.id"
 
     tags = {
-      Name = "Baby Terraform IGW"
+      Name = "BabyGaff Terraform IGW"
     }
 }
 
 #Create route table in eu-west-1
-resource "aws_route_table" "BabyRT" {
-    vpc_id = "aws_vpc.BabyVPC.id"
+resource "aws_route_table" "BabyGaffRT" {
+    vpc_id = "aws_vpc.BabyGaffVPC.id"
     route {
       cidr_block = "0.0.0.0/0"
-      gateway_id = "aws_internet_gateway.BabyIGW.id"
+      gateway_id = "aws_internet_gateway.BabyGaffIGW.id"
     }
 
     tags = {
-      Name = "Terraform RouteTable"
+      Name = "BabyGaff Terraform RouteTable"
     }
 }
 
 #Connect public subnet to route table
-resource "aws_route_table_association" "prod-crta-public-subnet-1"{
-    subnet_id = "{aws_subnet.BabyPublic1a.id}"
-    route_table_id = "{aws_route_table.BabyRT.id}"
+resource "aws_route_table_association" "BabyGaffPublic1a"{
+    subnet_id = "{aws_subnet.BabyGaffPublic1a.id}"
+    route_table_id = "{aws_route_table.BabyGaffRT.id}"
 }
 
 #Create SG for allowing TCP/80 & TCP/22
-resource "aws_security_group" "BabySG" {
-    vpc_id      = aws_vpc.BabyVPC.id
+resource "aws_security_group" "BabyGaffSG" {
+    vpc_id      = aws_vpc.BabyGaffVPC.id
     description = "Allow TCP/80 & TCP/22"
     
     ingress {
@@ -94,6 +94,6 @@ resource "aws_security_group" "BabySG" {
     }
   
     tags = {
-      Name = "BabySG"
+      Name = "BabyGaffSG"
     }
 }
