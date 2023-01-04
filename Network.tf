@@ -1,9 +1,3 @@
-provider "aws" {
-    access_key = ""
-    secret_key = ""
-    region = "eu-west-1"
-} 
-
 #Create IGW in eu-west-1
 resource "aws_internet_gateway" "BabyGaffIGW" {
     vpc_id = "aws_vpc.BabyGaffVPC.id"
