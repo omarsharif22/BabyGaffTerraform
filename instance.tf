@@ -1,7 +1,7 @@
 #Create ec2
 resource "aws_instance" "BabyGaffServer" {
   ami           = "DUMMY_VALUE_AMI_ID"
-  subnet_id     = "BabyGaffPublic1a"
+  subnet_id     = BabyGaffPublic1a
   instance_type = "t3.micro"
   vpc_security_group_ids = BabyGaffSG
   root_block_device = {
