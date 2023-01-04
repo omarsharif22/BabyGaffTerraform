@@ -19,6 +19,10 @@ resource "aws_instance" "BabyGaff" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.key121.key_name
   subnet_id     = aws_subnet.BabyGaffPublic1a.id
+  
+  tags = {
+    name = "PUB-BabyGaffServer"
+  }  
 }
 
 #Create Ec2 Private subnet
@@ -27,4 +31,8 @@ resource "aws_instance" "BabyGaff" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.key121.key_name
   subnet_id     = aws_subnet.BabyGaffPrivate1a.id
+  
+  tags = {
+    name = "PRIV-BabyGaffServer"
+  } 
 }
