@@ -11,6 +11,7 @@ resource "aws_instance" "BabyGaffServer" {
   tags = {
     Name = "BabyGaff Web Server"
   }
+  }  
 }
 
 #Create key pair
