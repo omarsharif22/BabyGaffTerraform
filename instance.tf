@@ -4,6 +4,9 @@ resource "aws_instance" "BabyGaffServer" {
   subnet_id     = "BabyGaffPublic1a"
   instance_type = "t3.micro"
   vpc_security_group_ids = BabyGaffSG
+  root_block_device = {
+    volume_type = "gp2"
+    volume_size = 40
   
   tags = {
     Name = "BabyGaff Web Server"
