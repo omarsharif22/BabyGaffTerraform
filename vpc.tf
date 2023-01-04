@@ -12,7 +12,7 @@ resource "aws_vpc" "BabyGaffVPC" {
 #Create public subnet #1 in eu-west-1a
 resource "aws_subnet" "BabyGaffPublic1a" {
     vpc_id            = aws_vpc.BabyGaffVPC.id
-    cidr_block        = "10.0.1.0/24"
+    cidr_block        = var.public_subnet_cidr_blocks
     map_public_ip_on_launch = "true"
     availability_zone = "eu-west-1a"
 
@@ -24,7 +24,7 @@ resource "aws_subnet" "BabyGaffPublic1a" {
 #Create private subnet #2 in eu-west-1a
 resource "aws_subnet" "BabyGaffPrivate1a" {
     vpc_id            = aws_vpc.BabyGaffVPC.id
-    cidr_block        = "10.0.2.0/24"
+    cidr_block        = var.private_subnet_cidr_blocks
     availability_zone = "eu-west-1a"
     
     tags = {
