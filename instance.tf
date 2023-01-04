@@ -14,7 +14,7 @@ resource "aws_key_pair" "key121" {
 }
 
 #Create Ec2 public subnet
-resource "aws_instance" "BabyGaff" {
+resource "aws_instance" "BabyGaffPUB" {
   ami           = lookup(var.AMIS, var.AWS_REGION)
   instance_type = "t2.micro"
   key_name      = aws_key_pair.key121.key_name
@@ -27,7 +27,7 @@ resource "aws_instance" "BabyGaff" {
 }
 
 #Create Ec2 Private subnet
-resource "aws_instance" "BabyGaff" {
+resource "aws_instance" "BabyGaffPRIV" {
   ami           = lookup(var.AMIS, var.AWS_REGION)
   instance_type = "t2.micro"
   key_name      = aws_key_pair.key121.key_name
