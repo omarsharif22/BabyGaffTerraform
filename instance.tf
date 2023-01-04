@@ -1,26 +1,30 @@
-#Create ec2
-resource "aws_instance" "BabyGaffServer" {
-  ami           = "DUMMY_VALUE_AMI_ID"
-  subnet_id     = BabyGaffPublic1a
-  instance_type = "t3.micro"
-  vpc_security_group_ids = BabyGaffSG
-
-  tags = {
-    Name = "BabyGaff Web Server"
-  }  
-}
-
-#Create key pair
-resource "tls_private_key" "BabyGaffKP" {
+#Create Key Pair
+resource "tls_private_key" "oskey" {
   algorithm = "RSA"
-  rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "BabyGaffKP" {
-  key_name   = "BabyGaffKP"
-  public_key = tls_private_key.BabyGaffKP.public_key_openssh
+resource "local_file" "myterrakey" {
+  content  = tls_private_key.oskey.private_key_pem
+  filename = "myterrakey.pem"
+}
 
-  provisioner "local-exec" {
-    command = "echo '${tls_private_key.BabyGaffKP.private_key_pem}' > ./Downloads/BabyGaffKP.pem"
-  }
+resource "aws_key_pair" "key121" {
+  key_name   = "myterrakey"
+  public_key = tls_private_key.oskey.public_key_openssh
+}
+
+#Create Ec2 public subnet
+resource "aws_instance" "BabyGaff" {
+  ami           = lookup(var.AMIS, var.AWS_REGION)
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.key121.key_name
+  subnet_id     = aws_subnet.BabyGaffPublic1a.id
+}
+
+#Create Ec2 Private subnet
+resource "aws_instance" "BabyGaff" {
+  ami           = lookup(var.AMIS, var.AWS_REGION)
+  instance_type = "t2.micro"
+  key_name      = aws_key_pair.key121.key_name
+  subnet_id     = aws_subnet.BabyGaffPrivate1a.id
 }
