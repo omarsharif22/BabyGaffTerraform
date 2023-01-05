@@ -13,7 +13,7 @@ resource "aws_key_pair" "key121" {
   public_key = tls_private_key.oskey.public_key_openssh
 }
 
-#Create Ec2 public subnet
+#Create in Ec2 public subnet
 resource "aws_instance" "BabyGaffPUB" {
   ami           = lookup(var.AMIS, var.AWS_REGION)
   instance_type = "t2.micro"
@@ -26,7 +26,7 @@ resource "aws_instance" "BabyGaffPUB" {
   }  
 }
 
-#Create Ec2 Private subnet
+#Create in Ec2 Private subnet
 resource "aws_instance" "BabyGaffPRIV" {
   ami           = lookup(var.AMIS, var.AWS_REGION)
   instance_type = "t2.micro"
